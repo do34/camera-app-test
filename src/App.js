@@ -10,6 +10,8 @@ import { faRulerCombined, faCamera, faArrowLeft } from '@fortawesome/free-solid-
 
 class App extends Component {
 
+  static eventName = /ios/i.test(navigator.userAgent) ? "orientationchange" : "resize";
+
   constructor(props) {
     console.log("constructor app")
     super(props);
@@ -63,8 +65,11 @@ class App extends Component {
       window.CameraPreview.startCamera(options, console.error);
     }
     else {
-      // $("body")[0].style.backgroundImage = 'url(./image.jpg)';
-      // $("body")[0].style.backgroundSize = "cover";
+      $("body")[0].style.backgroundImage = 'url(./image.jpg)';
+      $("body")[0].style.backgroundSize = "cover";
+      $("body")[0].style.backgroundRepeat = "no-repeat";
+      $("body")[0].style.backgroundAttachment = "fixed";
+      
     }
   }
 
@@ -123,14 +128,14 @@ class App extends Component {
     this.openCamera();
 
     if ('onorientationchange' in window) {
-      window.addEventListener("orientationchange", this.handleOrientationChange, true);
+      window.addEventListener(App.eventName, this.handleOrientationChange, true);
     }
   }
 
   componentWillUnmount() {
     console.log("componentWillUnmount");
     this.closeCamera();
-    window.removeEventListener("orientationchange", this.handleOrientationChange, true);
+    window.removeEventListener(App.eventName, this.handleOrientationChange, true);
   }
 
   handleOrientationChange() {
@@ -186,25 +191,25 @@ class App extends Component {
     console.log("getRangeCss", dpi);
     let mmInInch = 25.4;
     
-    let borderRadiusMm = 3.48;
+    // let borderRadiusMm = 3.48;
     let cardHeightMm = 53.98;
     let cardWidthMm = 85.60;
 
     let widthInIn = (rngLnd ? cardWidthMm : cardHeightMm) / mmInInch;
     let heightInIn = (rngLnd ? cardHeightMm : cardWidthMm ) / mmInInch;
     
-    let heightInPx = heightInIn * dpi;
-    let widthInPx = widthInIn * dpi;
-    let borderRadiusPx = (borderRadiusMm / mmInInch) * dpi;
+    let heightInPx = Math.ceil(heightInIn * dpi);
+    let widthInPx = Math.ceil(widthInIn * dpi);
+    // let borderRadiusPx = (borderRadiusMm / mmInInch) * dpi;
 
     console.log(heightInPx, widthInPx, dpi);
 
 
     let marginInPx = 16;
-    let borderInPx = 3;
+    let borderInPx = 1;
 
     let toolbarSpace = 32;
-    let toolBarSpaceWidth = dvcPrt ? 0 : toolbarSpace * 2;
+    let toolBarSpaceWidth = dvcPrt ? 0 : 36;
     let toolBarSpaceHeight = dvcPrt ? toolbarSpace : 0;
 
     let css = {};
@@ -225,21 +230,52 @@ class App extends Component {
         // too high
         sizeRatio = (screen.availHeight - toolBarSpaceHeight - marginInPx * 2 - borderInPx * 2) / heightInPx;
       }
-      widthInPx *= sizeRatio;
-      heightInPx *= sizeRatio;
-      borderRadiusPx *= sizeRatio;
+      widthInPx = Math.ceil(widthInPx * sizeRatio);
+      heightInPx = Math.ceil(heightInPx * sizeRatio);
+      // borderRadiusPx *= sizeRatio;
     } 
     console.log(heightInPx, widthInPx, dpi);
+    let top = Math.ceil((screen.availHeight - toolBarSpaceHeight - heightInPx  ) / 2);
+    let left = Math.ceil((screen.availWidth - toolBarSpaceWidth - widthInPx ) / 2);
     css = {
-      top: ((screen.availHeight - toolBarSpaceHeight - heightInPx  ) / 2) + "px",
-      left: ((screen.availWidth - toolBarSpaceWidth - widthInPx ) / 2) + "px",
+      top: top + "px",
+      left: left + "px",
       width: widthInPx + "px",
       height: heightInPx + "px",
-      "borderRadius": borderRadiusPx + "px",
-      position: "absolute"
+      // "borderRadius": borderRadiusPx + "px",
+      position: "absolute",
+      borderWidth: borderInPx + "px"
     }
 
-    return css;
+    let blenders = {
+      top : {
+        top: 0,
+        left: 0,
+        width: Math.ceil(screen.availWidth - toolBarSpaceWidth) + "px",
+        height: top + "px"
+      },
+      bottom : {
+        top: Math.ceil(top + heightInPx + borderInPx * 2) + "px",
+        left: 0,
+        width: Math.ceil(screen.availWidth - toolBarSpaceWidth) + "px",
+        height: Math.ceil(screen.availHeight - (top + heightInPx + borderInPx * 2)) + "px"
+      },
+      left : {
+        left: 0,
+        top: (top - 1) + "px",
+        height: Math.ceil(heightInPx + borderInPx * 2 + 2) + "px",
+        width: left + "px"
+      },
+      right : {
+        left: Math.ceil(left + widthInPx + borderInPx * 2) + "px",
+        top: (top - 1) + "px",
+        height: Math.ceil(heightInPx + borderInPx * 2 + 2) + "px",
+        width: left + "px"
+      }
+
+    }
+
+    return {range:css, blenders:blenders};
   }
   
   static setRotationClasses(isPortrait){
@@ -250,16 +286,20 @@ class App extends Component {
   render() {
     console.log("render app");
 
-    let rangeCss = App.getRangeCss(this.state.cardOrientationLS, this.state.isPortrait);
+    let css = App.getRangeCss(this.state.cardOrientationLS, this.state.isPortrait);
     return (
       <div className="App">
-        <div className="bc-range" style={rangeCss}></div>
+        <div className="working-space">
+          <div className="bc-range" style={css.range}></div>
+          <div className="blender bl-top" style={css.blenders.top}/>
+          <div className="blender bl-bottom" style={css.blenders.bottom}/>
+          <div className="blender bl-left" style={css.blenders.left}/>
+          <div className="blender bl-right" style={css.blenders.right}/>
+        </div>
         <div className="tool-bar">
           <Link to="/" onClick={this.closeCamera}><FontAwesomeIcon icon={faArrowLeft} /></Link>
           <button onClick={this.openResult}><FontAwesomeIcon icon={faCamera} /></button>
           <button onClick={this.rotateRange}><FontAwesomeIcon icon={faRulerCombined} /></button>
-         
-          
         </div>
       </div>
     );
