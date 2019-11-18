@@ -1,10 +1,15 @@
 $bcr-border: 3px;
-
+.blender{
+    position: absolute;
+    background-color: gray;
+    opacity: .5;
+    filter: blur(3px);
+}
 
 .bc-range {
     position: absolute;
     border: $bcr-border dashed red;
-    border-radius: 3.48mm;
+    // border-radius: 3.48mm;
     height: 53.98mm;
     width : 85.60mm;
 

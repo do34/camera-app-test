@@ -81,7 +81,7 @@ class Result extends Component {
         console.log("componentDidMount");
     
         if ('onorientationchange' in window) {
-          window.addEventListener("orientationchange", this.handleOrientationChange, true);
+          window.addEventListener(App.eventName, this.handleOrientationChange, true);
         }
 
         this.showImage(this.state.img);
@@ -90,7 +90,7 @@ class Result extends Component {
       componentWillUnmount() {
         console.log("componentWillUnmount");
         
-        window.removeEventListener("orientationchange", this.handleOrientationChange, true);
+        window.removeEventListener(App.eventName, this.handleOrientationChange, true);
       }
 
     handleOrientationChange() {
@@ -118,7 +118,7 @@ class Result extends Component {
 
         return (<div className="result">
             <canvas id="myCanvas" style={{display:"none"}} width={this.state.rect.width} height={this.state.rect.height} ></canvas>
-            <img id="imageRes" style={css} alt="result" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" ></img>
+            <img id="imageRes" style={css.range} alt="result" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" ></img>
 
             <div className="tool-bar">
                 <Link to="/App"> <FontAwesomeIcon icon={faUndo} /></Link>
