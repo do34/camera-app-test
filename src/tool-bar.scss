@@ -1,0 +1,27 @@
+.portrait .tool-bar {
+    display: inline-table;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+}
+
+.landscape .tool-bar {
+    display: inline-grid;
+    position: absolute;
+    right: 0;
+    height: 100vh;
+    margin: auto;
+    align-items: center;
+}
+
+.tool-bar>* {
+    display: inline;
+    background: blueviolet;
+    color: white;
+    padding: .4em;
+    text-decoration: none;
+    font-size: 1em;
+    border: none;
+    margin: .2em;
+}

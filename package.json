@@ -1,0 +1,60 @@
+{
+  "name": "com.pisa.image",
+  "displayName": "app",
+  "version": "1.0.0",
+  "homepage": "./",
+  "private": true,
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run remove:www && react-scripts start",
+    "build": "npm run remove:www && react-scripts build",
+    "build:cordova": "npm run remove:www && react-scripts build && node scripts/www.js && mv build www",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "remove:www": "rm -rf www"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
+    "cordova-android": "^8.1.0",
+    "cordova-plugin-camera-preview": "file:../cordova-plugin-camera-preview",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.13.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.2.0"
+  },
+  "devDependencies": {
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-camera-preview": {
+        "ANDROID_SUPPORT_LIBRARY_VERSION": "26+"
+      }
+    },
+    "platforms": []
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
