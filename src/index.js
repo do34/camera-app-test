@@ -6,9 +6,6 @@ import Start from "./Start";
 import App from "./App";
 import Result from "./Result";
 import Test from "./Test";
-// import registerServiceWorker from "./registerServiceWorker";
-
-
 
 ReactDOM.render(
   <Router>
