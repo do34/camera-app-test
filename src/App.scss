@@ -1,6 +1,7 @@
 .App, .result {
   height: 100vh;
   width: 100vw;
+  text-align: center;
 }
 
 body {
@@ -12,4 +13,22 @@ body {
 }
 
 
+.work-space {
+  height: 100%;
+  width: 100%;
+  
+  .landscape & {
+    width: calc(100% - 35px);
+  }
+
+  .portrait & {
+    height: calc(100% - 35px);
+  }
+
+  float: left;
+
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
 

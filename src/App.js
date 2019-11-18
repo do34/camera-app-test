@@ -137,22 +137,20 @@ class App extends Component {
 
   handleOrientationChange() {
     console.log("app - orientationchange", window.screen);
-    $(".bc-range").hide();
     let isPortrait = window.screen.width < window.screen.height;
     
     App.setRotationClasses(isPortrait);
 
     this.setState((state, props) => {
-      return {isPortrait: isPortrait};
+      return {
+              isPortrait: isPortrait,
+              cardOrientationLS: !isPortrait
+            }
     });
     if (typeof window.CameraPreview != "undefined") {
-    this.closeCamera();
-    this.openCamera();
+      this.closeCamera();
+      this.openCamera();
     }
-
-    setTimeout(function(){
-      $(".bc-range").show();
-    },500)
   }
 
   static getRangeCss(rngLnd,dvcPrt){
