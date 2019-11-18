@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import ToolBar from './tool-bar';
 import App from './App';
 import $ from 'jquery';
-import "./App.css";
+import "./App.scss";
 import "./tool-bar.scss";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUndo, faCheck } from '@fortawesome/free-solid-svg-icons';
-// import { faUndo } from '@fortawesome/free-solid-svg-icons';
 
 class Result extends Component {
-
     constructor(props) {
         super(props);
         console.log(props, this.state);
@@ -35,9 +32,6 @@ class Result extends Component {
         var canvas = document.getElementById('myCanvas');
         var context = canvas.getContext('2d');
         var imageObj = new Image();
-        //   var imageObj = document.getElementById('image');
-        // imageObj.height = Math.ceil(this.state.rect.height)
-        // imageObj.width = Math.ceil(this.state.rect.width)
         imageObj.onload = () => {
             console.log('onload', this.state.rect)
             console.log('onload', imageObj.height);
@@ -63,13 +57,7 @@ class Result extends Component {
             context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
             const dataURL = canvas.toDataURL();
             $(canvas).remove();
-            console.log(dataURL);
-            // $("#imageRes").css({
-            //     top:this.state.rect.pos.top,
-            //     left:this.state.rect.pos.left,
-            //     position: "absolute",
-            //     border: "3px dashed red"
-            // });
+            
             $("#imageRes")[0].src = dataURL;
             $("#imageRes")[0].setAttribute("has-image","y");
         };
@@ -106,10 +94,8 @@ class Result extends Component {
 
         setTimeout(function(){
             $("#imageRes").show();
-          },500)
+        },500)
     }
-
-    // width={this.state.rect.width} height={this.state.rect.height}
 
     render() {
         console.log("render res" , ($("#imageRes").length && $("#imageRes")[0].setAttribute("has-image","y")))
@@ -117,14 +103,14 @@ class Result extends Component {
             css = App.getRangeCss(this.state.cardOrientationLS, this.state.isPortrait);
 
         return (<div className="result">
-            <canvas id="myCanvas" style={{display:"none"}} width={this.state.rect.width} height={this.state.rect.height} ></canvas>
-            <img id="imageRes" style={css.range} alt="result" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" ></img>
-
+            <div className="work-space">
+                <canvas id="myCanvas" style={{ display: "none" }} width={this.state.rect.width} height={this.state.rect.height} ></canvas>
+                <img id="imageRes" style={css.range} alt="result" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" ></img>
+            </div>
             <div className="tool-bar">
                 <Link to="/App"> <FontAwesomeIcon icon={faUndo} /></Link>
                 <Link to="/"><FontAwesomeIcon icon={faCheck} /></Link>
             </div>
-
         </div>)
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import $ from 'jquery';
-import "./App.css";
+import "./App.scss";
 import "./range.scss";
 import "./tool-bar.scss";
 
@@ -29,8 +29,6 @@ class App extends Component {
     this.openResult = this.openResult.bind(this);
     this.rotateRange = this.rotateRange.bind(this);
     this.openCamera = this.openCamera.bind(this);
-    // this.getRangeCss = this.getRangeCss.bind(this);
-    // this.setRotationClasses = this.setRotationClasses.bind(this);
 
     App.setRotationClasses(isPortrait);
   }
@@ -72,7 +70,6 @@ class App extends Component {
       
     }
   }
-
 
   closeCamera() {
     console.log("closeCamera");
@@ -158,26 +155,6 @@ class App extends Component {
     },500)
   }
 
-  getDPIOld() {
-    var div = document.createElement( "div");
-    div.style.height = "1in";
-    div.style.width = "1in";
-    div.style.top = "-100%";
-    div.style.left = "-100%";
-    div.style.position = "absolute";
-
-    document.body.appendChild(div);
-
-    var result =  div.offsetHeight;
-    if (result !== div.offsetWidth){
-      console.error("different dpi!")
-    }
-
-    document.body.removeChild( div );
-    // var devicePixelRatio = window.devicePixelRatio || 1;
-    return result;
-  }
-
   static getRangeCss(rngLnd,dvcPrt){
     function findFirstPositive(b, a, i, c) {
       c = (d, e) => e >= d ? (a = d + (e - d) / 2, 0 < b(a) && (a === d || 0 >= b(a - 1)) ? a : 0 >= b(a) ? c(a + 1, e) : c(d, a - 1)) : -1
@@ -203,7 +180,6 @@ class App extends Component {
     // let borderRadiusPx = (borderRadiusMm / mmInInch) * dpi;
 
     console.log(heightInPx, widthInPx, dpi);
-
 
     let marginInPx = 16;
     let borderInPx = 1;
@@ -235,47 +211,12 @@ class App extends Component {
       // borderRadiusPx *= sizeRatio;
     } 
     console.log(heightInPx, widthInPx, dpi);
-    let top = Math.ceil((screen.availHeight - toolBarSpaceHeight - heightInPx  ) / 2);
-    let left = Math.ceil((screen.availWidth - toolBarSpaceWidth - widthInPx ) / 2);
     css = {
-      top: top + "px",
-      left: left + "px",
       width: widthInPx + "px",
       height: heightInPx + "px",
-      // "borderRadius": borderRadiusPx + "px",
-      position: "absolute",
       borderWidth: borderInPx + "px"
     }
-
-    let blenders = {
-      top : {
-        top: 0,
-        left: 0,
-        width: Math.ceil(screen.availWidth - toolBarSpaceWidth) + "px",
-        height: top + "px"
-      },
-      bottom : {
-        top: Math.ceil(top + heightInPx + borderInPx * 2) + "px",
-        left: 0,
-        width: Math.ceil(screen.availWidth - toolBarSpaceWidth) + "px",
-        height: Math.ceil(screen.availHeight - (top + heightInPx + borderInPx * 2)) + "px"
-      },
-      left : {
-        left: 0,
-        top: (top - 1) + "px",
-        height: Math.ceil(heightInPx + borderInPx * 2 + 2) + "px",
-        width: left + "px"
-      },
-      right : {
-        left: Math.ceil(left + widthInPx + borderInPx * 2) + "px",
-        top: (top - 1) + "px",
-        height: Math.ceil(heightInPx + borderInPx * 2 + 2) + "px",
-        width: left + "px"
-      }
-
-    }
-
-    return {range:css, blenders:blenders};
+    return {range:css};
   }
   
   static setRotationClasses(isPortrait){
@@ -289,12 +230,20 @@ class App extends Component {
     let css = App.getRangeCss(this.state.cardOrientationLS, this.state.isPortrait);
     return (
       <div className="App">
-        <div className="working-space">
-          <div className="bc-range" style={css.range}></div>
-          <div className="blender bl-top" style={css.blenders.top}/>
-          <div className="blender bl-bottom" style={css.blenders.bottom}/>
-          <div className="blender bl-left" style={css.blenders.left}/>
-          <div className="blender bl-right" style={css.blenders.right}/>
+        <div className="work-space">
+        <table cellspacing="0" cellpadding="0" >
+          <tr>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="bc-range" style={css.range}></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+          </tr>
+        </table>
         </div>
         <div className="tool-bar">
           <Link to="/" onClick={this.closeCamera}><FontAwesomeIcon icon={faArrowLeft} /></Link>
