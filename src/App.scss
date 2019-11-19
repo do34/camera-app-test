@@ -17,13 +17,13 @@ body {
   height: 100%;
   width: 100%;
   
-  .landscape & {
-    width: calc(100% - 35px);
-  }
+  // .landscape & {
+  //   width: calc(100% - 58px);
+  // }
 
-  .portrait & {
-    height: calc(100% - 35px);
-  }
+  // .portrait & {
+  //   height: calc(100% - 62px);
+  // }
 
   float: left;
 

@@ -182,9 +182,9 @@ class App extends Component {
     let marginInPx = 16;
     let borderInPx = 1;
 
-    let toolbarSpace = 32;
-    let toolBarSpaceWidth = dvcPrt ? 0 : 36;
-    let toolBarSpaceHeight = dvcPrt ? toolbarSpace : 0;
+    // let toolbarSpace = 32;
+    let toolBarSpaceWidth = dvcPrt ? 0 : 58;
+    let toolBarSpaceHeight = dvcPrt ? 62 : 0;
 
     let css = {};
 

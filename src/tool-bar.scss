@@ -36,15 +36,17 @@
 }
 
 .tool-bar{
-    background: gray;
+    background-color:black;
 
     >* {
+        padding: .5em;
+        border-radius: 2em;
+        font-size: 1.5em;
+
         display: inline;
         background: blueviolet;
         color: white;
-        padding: .4em;
         text-decoration: none;
-        font-size: 1em;
         border: none;
         margin: .2em;
     }
