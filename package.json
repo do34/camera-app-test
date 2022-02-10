@@ -26,7 +26,7 @@
     "cordova-android": "^8.1.0",
     "cordova-plugin-camera-preview": "file:../cordova-plugin-camera-preview",
     "jquery": "^3.4.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router": "^5.1.2",
