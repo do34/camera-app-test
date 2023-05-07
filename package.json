@@ -25,7 +25,7 @@
     "@fortawesome/react-fontawesome": "^0.1.7",
     "cordova-android": "^8.1.0",
     "cordova-plugin-camera-preview": "file:../cordova-plugin-camera-preview",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
